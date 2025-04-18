@@ -1,27 +1,18 @@
 ---
-const apiUrl = 'https://script.google.com/macros/s/AKfycbyXMe6L-nWz5kIz2NJo35hmKk3z3SUe0QVszidzXaumNh883ST-5S_iflENRx7DlimufA/exec'; // tu URL real
-const response = await fetch(apiUrl);
-const data = await response.json();
-const imagenes: string[] = data.map((item: { imagen_url: string }) => item.imagen_url);
+
 ---
 
 <section class="relative bg-black w-full h-10/12 min-h-96 flex items-center justify-center overflow-hidden">
   <div class="carousel w-full overflow-hidden text-white">
     <div class="carousel-buttons">
-        <span class="carousel-button absolute border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-10"><i class="fa-solid fa-arrow-left"></i></span>
-        <span class="carousel-button absolute right-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2"><i class="fa-solid fa-arrow-right"></i></span>
+        <span class="carousel-button absolute border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-1 hover:scale-110"><i class="fa-solid fa-arrow-left"></i></span>
+        <span class="carousel-button absolute right-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-1 hover:scale-110"><i class="fa-solid fa-arrow-right"></i></span>
       </div>
   </div>
-  <div class="slides w-full h-full flex items-center justify-center">
+  <div class="slides absolute w-full h-full flex items-center justify-center">
     <div class="slide">
-      <div class="flex justify-center gap-4 py-4">
-        {imagenes.map((url, i) => (
-          <img
-            src={url}
-            alt={`Imagen carrusel ${i + 1}`}
-            class="rounded-xl w-full shadow-md transition hover:scale-105"
-          />
-        ))}
+      <div class="content relative">
+        <img src="images/PruebaImagen.png" alt="" class="w-full h-full object-cover">
       </div>
     </div>
   </div>
