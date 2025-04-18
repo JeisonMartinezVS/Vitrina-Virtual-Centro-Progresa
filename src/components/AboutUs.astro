@@ -1,18 +1,134 @@
 ---
-let chevron = true;
+
 ---
 
 <div class="w-full py-6">
-    <button 
-        class="flex items-center w-[96%] p-5 mx-auto roundend-full shadow justify-between"
+  <button
+    id="toggleBtn"
+    class="flex items-center w-[96%] p-5 mx-auto roundend-full shadow justify-between cursor-pointer"
+  >
+    <span class="text-purple-800 font-bold text-xl"
+      >Conoce más sobre nosotros</span
     >
-        <span class="text-purple-800 font-bold text-xl">Conoce más sobre nosotros</span>
-        <i class:list={[
-            {
-                'fa-solid fa-chevron-down': chevron,
-                'fa-solid fa-chevron-up': !chevron,
-            },
-            'text-purple-800'
-        ]}></i>
-    </button>
+    <i id="chevron" class="fa-solid fa-chevron-down text-purple-800"></i>
+  </button>
+  <div
+    id="content"
+    class="w-[96%] mx-auto p-5 bg-white shadow hidden"
+  >
+    <div class="grid grid-cols-2 gap-4">
+      <div class="text-gray-700 text-base flex flex-col">
+        <div class="mb-8">
+          <span class="font-bold text-xl">Nuestra Misión</span>
+          <p class="mt-4">
+            En Vitrina Virtual Centro Progresa, nuestra misión es impulsar el
+            talento emprendedor de los estudiantes de UNIMINUTO, brindándoles
+            las herramientas, el conocimiento y el apoyo necesario para
+            convertir sus ideas innovadoras en emprendimientos exitosos que
+            generen impacto positivo en la sociedad.
+          </p>
+        </div>
+        <div>
+          <span class="font-bold text-xl mb-2">Nuestros Valores</span>
+          <ul class="list-disc list-inside">
+            <li class="mt-2">Innovación y creatividad</li>
+            <li class="mt-2">Compromiso social</li>
+            <li class="mt-2">Trabajo colaborativo</li>
+            <li class="mt-2">Excelencia académica</li>
+            <li class="mt-2">Desarrollo sostenible</li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-gray-700 text-base flex flex-col">
+        <div class="mb-4 flex flex-col">
+          <span class="font-bold text-xl">Nuestros Servicios</span>
+          <div class="mt-4 flex flex-row gap-2 items-center">
+            <i
+              class="fa-regular fa-circle-check text-2xl bg-purple-300 rounded-full text-purple-950"
+            ></i>
+            <div>
+              <span class="font-bold">Asesoría Empresarial</span>
+              <p>
+                Orientación personalizada para el desarrollo de tu idea de
+                negocio.
+              </p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-row gap-2 items-center">
+            <i
+              class="fa-regular fa-circle-check text-2xl bg-purple-300 rounded-full text-purple-950"
+            ></i>
+            <div>
+              <span class="font-bold">Capacitación</span>
+              <p>
+                Talleres y cursos para fortalecer tus habilidades emprendedoras.
+              </p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-row gap-2 items-center">
+            <i
+              class="fa-regular fa-circle-check text-2xl bg-purple-300 rounded-full text-purple-950"
+            ></i>
+            <div>
+              <span class="font-bold">Networking</span>
+              <p>Conexión con otros emprendedores y posibles inversionistas.</p>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-row gap-2 items-center">
+            <i
+              class="fa-regular fa-circle-check text-2xl bg-purple-300 rounded-full text-purple-950"
+            ></i>
+            <div>
+              <span class="font-bold">Vitrina Virtual</span>
+              <p>
+                Espacio digital para mostrar y comercializar tus productos o
+                servicios.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="font-bold text-xl mb-2">Síguenos en redes sociales</span>
+          <div class="flex gap-4 mt-2 text-3xl">
+            <a
+              href="https://www.facebook.com/centroprogresa/"
+              target="_blank"
+              class="text-blue-600"><i class="fa-brands fa-facebook"></i></a
+            >
+            <a
+              href="https://www.instagram.com/centroprogresa/"
+              target="_blank"
+              class="text-pink-600"><i class="fa-brands fa-instagram"></i></a
+            >
+            <a
+              href="https://twitter.com/centroprogresa"
+              target="_blank"
+              class="text-blue-400"><i class="fa-brands fa-twitter"></i></a
+            >
+            <a
+              href="https://www.linkedin.com/company/centroprogresa/"
+              target="_blank"
+              class="text-blue-700"><i class="fa-brands fa-linkedin"></i></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script lang="ts">
+  let toggleBtn = document.getElementById("toggleBtn");
+  let chevronIcon = document.getElementById("chevron");
+  let content = document.getElementById("content");
+  let chevron = true;
+
+  toggleBtn?.addEventListener("click", () => {
+    chevron = !chevron;
+    chevronIcon?.classList.toggle("fa-chevron-down", chevron);
+    chevronIcon?.classList.toggle("fa-chevron-up", !chevron);
+    content?.classList.toggle("hidden", chevron);
+    content?.classList.toggle("block", !chevron);
+  });
+</script>
+
