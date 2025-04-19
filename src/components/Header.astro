@@ -1,10 +1,10 @@
 ---
-
+const {items} = Astro.props;
 ---
 <header class="bg-white text-black p-4 flex justify-between items-center fixed top-0 left-0 w-full shadow-md z-50">
     <a href="/" class="flex items-center">
         <img
-            src="Logo_VVCP.png"
+            src={items.logo}
             alt="Logo Vitrina Virtual Centro Progresa"
             class="h-10 w-8 mr-2"
         />
@@ -12,9 +12,9 @@
     </a>
     <nav>
         <ul class="flex space-x-4">
-            <li><a href="/" class="hover:text-gray-400">Inicio</a></li>
-            <li><a href="/" class="hover:text-gray-400">Contacto</a></li>
-            <li><a href="/" class="hover:text-gray-400">Nosotros</a></li>
+            {items.menu.map((menu:any) => (
+                <li><a href={menu.link} class="hover:text-gray-400">{menu.name}</a></li>
+            ))}
         </ul>
     </nav>
 </header>

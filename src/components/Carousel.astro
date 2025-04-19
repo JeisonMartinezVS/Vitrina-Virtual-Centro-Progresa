@@ -1,19 +1,78 @@
 ---
-
+const { items } = Astro.props;
 ---
 
-<section class="relative bg-black w-full h-10/12 min-h-96 flex items-center justify-center overflow-hidden">
-  <div class="carousel w-full overflow-hidden text-white">
-    <div class="carousel-buttons">
-        <span class="carousel-button absolute border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-1 hover:scale-110"><i class="fa-solid fa-arrow-left"></i></span>
-        <span class="carousel-button absolute right-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-1 hover:scale-110"><i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-  </div>
-  <div class="slides absolute w-full h-full flex items-center justify-center">
-    <div class="slide">
-      <div class="content relative">
-        <img src="images/PruebaImagen.png" alt="" class="w-full h-full object-cover">
-      </div>
+<section
+  class="relative bg-black w-full h-10/12 min-h-96 flex items-center justify-center overflow-hidden group"
+>
+  <div class="carousel w-full overflow-hidden text-white relative">
+    <div
+      class="slides h-full flex transition-transform duration-500 ease-in-out"
+    >
+      {
+        items.map((banner: any) => (
+          <a href={banner.link} target={banner.target} class="min-w-full h-full">
+            <img
+              src={banner.image}
+              alt={banner.title}
+              class="slide w-full h-full object-cover"
+            />
+          </a>
+        ))
+      }
     </div>
   </div>
+
+  <div
+    class="carousel-buttons opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+  >
+    <span
+      class="carousel-button absolute left-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-10 hover:scale-110"
+      ><i class="fa-solid fa-arrow-left"></i></span
+    >
+    <span
+      class="carousel-button absolute right-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-10 hover:scale-110"
+      ><i class="fa-solid fa-arrow-right"></i></span
+    >
+  </div>
 </section>
+
+<script lang="ts" is:inline>
+  const delay = 3000;
+
+  const slides = document.querySelector(".slides");
+  const slideCount = slides.childElementCount;
+  const maxLeft = (slideCount - 1) * 100 * -1;
+
+  let current = 0;
+
+  function changeSlide(next = true) {
+    if (next) {
+      current = current > maxLeft ? current - 100 : 0;
+    } else {
+      current = current < 0 ? current + 100 : maxLeft;
+    }
+
+    slides.style.transform = `translateX(${current}%)`;
+  }
+
+  let autoChange = setInterval(changeSlide, delay);
+  const restart = function () {
+    clearInterval(autoChange);
+    autoChange = setInterval(changeSlide, delay);
+  };
+
+  document
+    .querySelector(".fa-arrow-left")
+    .addEventListener("click", function () {
+      changeSlide(false);
+      restart();
+    });
+
+  document
+    .querySelector(".fa-arrow-right")
+    .addEventListener("click", function () {
+      changeSlide(true);
+      restart();
+    });
+</script>

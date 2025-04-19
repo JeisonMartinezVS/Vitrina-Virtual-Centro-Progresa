@@ -1,31 +1,29 @@
 ---
-
+const {items} = Astro.props;
 ---
 
 <div
   class="card relative rounded-2xl bg-white flex flex-col hover:scale-105 group ease-in transition duration-300"
 >
-  <div class="overflow-hidden rounded-t-2xl flex justify-center items-center relative">
-    <img
-      src="images/carousel1.png"
-      alt="Emprendimiento 1"
-      class="w-full h-full object-cover rounded-t-2xl"
-    />
+      <div class="overflow-hidden rounded-t-2xl flex justify-center items-center relative">
+        <img
+          src={items.image}
+          alt="Emprendimiento 1"
+          class="w-full h-full object-cover rounded-t-2xl"
+        />
+        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-    <button class="cursor-pointer absolute bg-white text-purple-900 rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        Ver detalles
-    </button>
-  </div>
-  <div class="px-4 py-3">
-    <h3 class="text-xs text-gray-500">Categoria aqui</h3>
-    <p class="text-gray-700 text-base font-bold">Nombre del emprendimiento</p>
-    <p class="text-gray-500 text-sm mb-4">Nombre del emprendedor</p>
-    <a
-      href="#"
-      class="text-sm flex items-center justify-center text-center bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-32"
-      >Conoce más!</a
-    >
-  </div>
+        <button class="cursor-pointer absolute bg-white text-purple-900 rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          Ver detalles
+        </button>
+      </div>
+      <div class="px-4 py-3">
+      <h3 class="text-xs text-gray-500">{items.categories}</h3>
+      <p class="text-gray-700 text-base font-bold">{items.title}</p>
+      <p class="text-gray-500 text-sm mb-4">{items.entrepreneur}</p>
+      <a
+        href="#"
+        class="text-sm flex items-center justify-center text-center bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-32"
+        >Conoce más!</a>
+    </div>
 </div>
