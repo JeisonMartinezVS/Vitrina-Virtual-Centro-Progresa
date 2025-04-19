@@ -92,7 +92,7 @@ export const config = {
         {
             "id": 5,
             "name": "Educación",
-        }
+        },
         {
             "id": 6,
             "name": "Prueba",
