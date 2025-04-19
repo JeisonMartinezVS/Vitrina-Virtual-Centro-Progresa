@@ -3,7 +3,7 @@ export const config = {
         {
             "id": 1,
             "title": "Tecno Moda",
-            "description": "Esto es un ejemplo",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci suscipit, saepe iure, amet perferendis qui quod fugiat animi delectus rem eaque, atque inventore praesentium doloremque magnam nostrum repellendus nulla assumenda.",
             "entrepreneur": "Jeison",
             "categories": "Moda",
             "social_links": {
@@ -17,7 +17,7 @@ export const config = {
         {
             "id": 2,
             "title": "Tecno Moda",
-            "description": "Esto es un ejemplo",
+            "description": "Esto es un ejemplo2",
             "entrepreneur": "Andres",
             "categories": "Moda",
             "social_links": {
@@ -31,7 +31,7 @@ export const config = {
         {
             "id": 3,
             "title": "Tecno Moda",
-            "description": "Esto es un ejemplo",
+            "description": "Esto es un ejemplo3",
             "entrepreneur": "Camila",
             "categories": "Moda",
             "social_links": {

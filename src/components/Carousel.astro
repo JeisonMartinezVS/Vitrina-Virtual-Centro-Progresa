@@ -9,9 +9,14 @@ const { items } = Astro.props;
     <div
       class="slides h-full flex transition-transform duration-500 ease-in-out"
     >
+      <!-- Las imagenes deben ser de 1894x575 -->
       {
         items.map((banner: any) => (
-          <a href={banner.link} target={banner.target} class="min-w-full h-full">
+          <a
+            href={banner.link}
+            target={banner.target}
+            class="min-w-full h-full"
+          >
             <img
               src={banner.image}
               alt={banner.title}
@@ -23,22 +28,22 @@ const { items } = Astro.props;
     </div>
   </div>
 
-  <div
-    class="carousel-buttons opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
-  >
-    <span
-      class="carousel-button absolute left-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-10 hover:scale-110"
-      ><i class="fa-solid fa-arrow-left"></i></span
-    >
-    <span
-      class="carousel-button absolute right-0 border-1 rounded-[1.5rem] bg-white text-black px-1 cursor-pointer m-2 z-10 hover:scale-110"
-      ><i class="fa-solid fa-arrow-right"></i></span
-    >
-  </div>
+  {
+    items.length > 1 && (
+      <div class="carousel-buttons opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+        <span class="carousel-button absolute left-0 text-gray-300 text-5xl px-1 cursor-pointer m-2 z-10 hover:scale-110">
+          <i class="fa-solid fa-chevron-left"></i>
+        </span>
+        <span class="carousel-button absolute right-0 text-gray-300 text-5xl px-1 cursor-pointer m-2 z-10 hover:scale-110">
+          <i class="fa-solid fa-chevron-right"></i>
+        </span>
+      </div>
+    )
+  }
 </section>
 
 <script lang="ts" is:inline>
-  const delay = 3000;
+  const delay = 5000;
 
   const slides = document.querySelector(".slides");
   const slideCount = slides.childElementCount;
@@ -63,14 +68,14 @@ const { items } = Astro.props;
   };
 
   document
-    .querySelector(".fa-arrow-left")
+    .querySelector(".fa-chevron-left")
     .addEventListener("click", function () {
       changeSlide(false);
       restart();
     });
 
   document
-    .querySelector(".fa-arrow-right")
+    .querySelector(".fa-chevron-right")
     .addEventListener("click", function () {
       changeSlide(true);
       restart();
