@@ -49,11 +49,11 @@
                 </div>
                 <div class="flex items-center mb-4">
                     <i class="fa-solid fa-phone text-black mr-2"></i>
-                    <h3 class="text-xs text-gray-500" id="modalEntrepreneur"></h3>
+                    <h3 class="text-xs text-gray-500" id="modalPhone"></h3>
                 </div>
                 <div class="flex items-center mb-8">
                     <i class="fa-solid fa-envelope text-black mr-2"></i>
-                    <h3 class="text-xs text-gray-500" id="modalEntrepreneur"></h3>
+                    <h3 class="text-xs text-gray-500" id="modalEmail"></h3>
                 </div>
                 <div class="social-links pb-6">
                     <p class="text-xl font-bold">Redes Sociales</p>
@@ -79,7 +79,7 @@
 </div>
 
 <script is:inline>
-    function openModal(title, description, categories, image, entrepreneur) {
+    function openModal(title, description, categories, image, entrepreneur, email, phone) {
         const modalTitles = document.querySelectorAll(".modal-title");
         modalTitles.forEach((element) => {
             element.textContent = title;
@@ -88,6 +88,8 @@
         document.getElementById("modalImage").src = image;
         document.getElementById("modalCategory").textContent = categories;
         document.getElementById("modalEntrepreneur").textContent = entrepreneur;
+        document.getElementById("modalEmail").textContent = email
+        document.getElementById("modalPhone").textContent = phone
         document.getElementById("modal").classList.remove("hidden");
     }
 
