@@ -10,7 +10,7 @@ import Modal from "../Modal.astro";
     class="overflow-hidden rounded-t-2xl flex justify-center items-center relative"
   >
     <img
-      src={items.logo_url}
+      src={items.logo_path}
       alt="Emprendimiento 1"
       class="w-full h-full object-cover rounded-t-2xl"
     />
@@ -20,7 +20,7 @@ import Modal from "../Modal.astro";
     </div>
 
     <button
-      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.image}", "${items.entrepreneur}", "${items.email}" , "${items.phone}")`}
+      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.logo_path}", "${items.entrepreneur}", "${items.email}" , "${items.phone}")`}
       class="cursor-pointer absolute bg-white text-purple-900 rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
     >
       Ver detalles
@@ -31,7 +31,7 @@ import Modal from "../Modal.astro";
     <p class="text-gray-700 text-base font-bold">{items.business_name}</p>
     <p class="text-gray-500 text-sm mb-4">{items.entrepreneur}</p>
     <a
-      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.image}", "${items.entrepreneur}", "${items.email}" , "${items.phone}")`}
+      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.logo_path}", "${items.entrepreneur}", "${items.email}" , "${items.phone}")`}
       class="cursor-pointer text-sm flex items-center justify-center text-center bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-32"
       >Conoce más!</a
     >

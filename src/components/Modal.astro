@@ -79,13 +79,13 @@
 </div>
 
 <script is:inline>
-    function openModal(title, description, categories, image, entrepreneur, email, phone) {
+    function openModal(title, description, categories, logo_path, entrepreneur, email, phone) {
         const modalTitles = document.querySelectorAll(".modal-title");
         modalTitles.forEach((element) => {
             element.textContent = title;
         });
         document.getElementById("modalDescription").textContent = description;
-        document.getElementById("modalImage").src = image;
+        document.getElementById("modalImage").src = logo_path;
         document.getElementById("modalCategory").textContent = categories;
         document.getElementById("modalEntrepreneur").textContent = entrepreneur;
         document.getElementById("modalEmail").textContent = email
