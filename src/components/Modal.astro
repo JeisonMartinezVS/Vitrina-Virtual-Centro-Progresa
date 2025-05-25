@@ -132,8 +132,11 @@
     }
 
     try {
-      // 🔍 PRIMERA CONSULTA: buscar el ID del emprendedor por su nombre
-    const usersRes = await fetch("/api/users-manager/entrepreneurs/");
+    // Api desarrollo
+    // const usersRes = await fetch("/api/users-manager/entrepreneurs/");
+
+    // Api Produccion
+    const usersRes = await fetch("https://virtualcase-backend.onrender.com/users-manager/entrepreneurs/");
 
     const allEntrepreneurs = await usersRes.json();
 
@@ -145,10 +148,12 @@
 
     const entrepreneurId = match.id;
 
-    // 🌐 SEGUNDA CONSULTA: redes sociales con ese ID
-    const res = await fetch(
-      `/api/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`
-    );
+    // Api Desarrollo
+    // const res = await fetch(`/api/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`);
+
+    // Api Produccion
+    const res = await fetch(`https://virtualcase-backend.onrender.com/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`);
+
       const links = await res.json();
 
       const container = document.getElementById("modalSocialLinks");
