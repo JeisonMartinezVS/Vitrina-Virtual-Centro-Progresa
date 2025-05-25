@@ -8,6 +8,15 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({}),
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://virtualcase-backend.onrender.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+    }
   }
 });

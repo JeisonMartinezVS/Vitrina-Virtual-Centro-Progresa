@@ -77,8 +77,8 @@
         </div>
         <div class="social-links pb-6">
           <p class="text-xl font-bold">Redes Sociales</p>
-          <div class="flex gap-4 mt-2">
-            <a href="#" class="text-blue-500 hover:text-blue-700">
+          <div id="modalSocialLinks" class="flex gap-4 mt-2">
+            <!-- <a href="#" class="text-blue-500 hover:text-blue-700">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
             <a href="#" class="text-blue-400 hover:text-blue-600">
@@ -89,7 +89,7 @@
             </a>
             <a href="#" class="text-red-500 hover:text-red-700">
               <i class="fa-brands fa-youtube"></i>
-            </a>
+            </a> -->
           </div>
         </div>
         <a
@@ -105,14 +105,15 @@
 </div>
 
 <script is:inline>
-  function openModal(
+  async function openModal(
     title,
     description,
     categories,
     logo_path,
     entrepreneur,
     email,
-    phone
+    phone,
+    entrepreneur_id
   ) {
     const modalTitles = document.querySelectorAll(".modal-title");
     modalTitles.forEach((element) => {
@@ -130,6 +131,54 @@
         wppBtn.href = `https://wa.me/${phone}`
     }
 
+    try {
+      // 🔍 PRIMERA CONSULTA: buscar el ID del emprendedor por su nombre
+    const usersRes = await fetch("/api/users-manager/entrepreneurs/");
+
+    const allEntrepreneurs = await usersRes.json();
+
+    const match = allEntrepreneurs.find((e) => e.business_name === title);
+    if (!match) {
+      console.warn("Emprendedor no encontrado");
+      return;
+    }
+
+    const entrepreneurId = match.id;
+
+    // 🌐 SEGUNDA CONSULTA: redes sociales con ese ID
+    const res = await fetch(
+      `/api/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`
+    );
+      const links = await res.json();
+
+      const container = document.getElementById("modalSocialLinks");
+      container.innerHTML = "";
+
+      const platformIcons = {
+        facebook: "fa-facebook-f",
+        twitter: "fa-twitter",
+        instagram: "fa-instagram",
+        youtube: "fa-youtube",
+        linkedin: "fa-linkedin-in",
+        tiktok: "fa-tiktok",
+        whatsapp: "fa-whatsapp"
+      };
+
+      links.forEach((link) => {
+        const platform = link.platform.toLowerCase();
+        const icon = platformIcons[platform] || "fa-globe";
+
+        const a = document.createElement("a");
+        a.href = link.url;
+        a.target = "_blank";
+        a.className = "hover:opacity-75 text-xl";
+        a.innerHTML = `<i class="fa-brands ${icon}"></i>`;
+        container.appendChild(a);
+      });
+    } catch(e) {
+      console.error("Error", e);
+    }
+
     document.getElementById("modal").classList.remove("hidden");
   }
 
@@ -137,5 +186,23 @@
     document.getElementById("modal").classList.add("hidden");
   }
 
-  window.openModal = openModal;
+  window.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".open-modal-btn");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openModal(
+          btn.dataset.title,
+          btn.dataset.description,
+          btn.dataset.categories,
+          btn.dataset.logo_path,
+          btn.dataset.entrepreneur,
+          btn.dataset.entrepreneurId,
+          btn.dataset.email,
+          btn.dataset.phone
+        );
+      });
+    });
+  });
 </script>
+
