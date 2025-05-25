@@ -6,10 +6,10 @@ const data = await resp.json()
 ---
 
 <div class="w-full py-10 bg-gray-100 p-4 flex flex-col items-center">
-  <span class="text-3xl font-bold mb-4">NUESTRA VARIEDAD DE EMPRENDIMIENTOS</span>
+  <span class="text-3xl font-bold mb-4 text-center">NUESTRA VARIEDAD DE EMPRENDIMIENTOS</span>
   <hr class="w-1/2 border-t-2 border-gray-300 mb-4" />
-  <span class="">Explora diferentes categorías de emprendimientos y descubre proyectos innovadores en cada una de ellas.</span>
-  <div class="flex gap-10 mt-4">
+  <span class="text-center">Explora diferentes categorías de emprendimientos y descubre proyectos innovadores en cada una de ellas.</span>
+  <div class="grid grid-cols-3 md:flex gap-10 mt-4">
     {data.map((categories: any) => (
       <div title={categories.description} class="flex relative items-center justify-center w-20 h-20 bg-white rounded-full shadow hover:shadow-lg transition-shadow duration-300">
         <i class:list={categories.icon + [" text-4xl"]}></i>

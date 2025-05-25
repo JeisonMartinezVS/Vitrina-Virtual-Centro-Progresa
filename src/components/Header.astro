@@ -11,12 +11,15 @@ const {items} = Astro.props;
         <span class="text-xl">Vitrina Virtual Centro Progresa</span>
     </a>
     <nav>
-        <ul class="flex space-x-4">
+        <ul class="hidden md:flex space-x-4">
             {items.menu.map((menu:any) => (
                 <li><a href={menu.link} class="hover:text-gray-400">{menu.name}</a></li>
             ))}
         </ul>
     </nav>
+    <div class="flex md:hidden">
+    <i class="fa-solid fa-bars"></i>
+    </div>
 </header>
 
 
