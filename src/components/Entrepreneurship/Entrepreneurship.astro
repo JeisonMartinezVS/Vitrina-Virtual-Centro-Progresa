@@ -1,26 +1,73 @@
 ---
 import CardEntrepreneur from "./CardEntrepreneur.astro";
-import { config } from "../../../public/config";
-
-const resp = await fetch ('https://virtualcase-backend.onrender.com/users-manager/entrepreneurs/')
-const status = resp.status
-const data = status === 200 ? await resp.json() : []
+const resp = await fetch(
+  "https://virtualcase-backend.onrender.com/users-manager/entrepreneurs/"
+);
+const status = resp.status;
+const data = status === 200 ? await resp.json() : [];
 ---
 
-<div id="entrepreneurship" class="bg-purple-900 p-4 pb-20 flex flex-col items-center text-white">
+<div
+  id="entrepreneurship"
+  class="bg-purple-900 p-4 pb-20 flex flex-col items-center text-white"
+>
   <h2 class="text-2xl font-bold my-10">Emprendimientos</h2>
+  <div class="flex justify-center items-center gap-3 mb-8 w-full max-w-lg bg-white rounded-lg shadow-md px-4 py-2">
+    <span class="text-purple-900 text-xl">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Buscar emprendimiento..."
+      class="flex-1 p-2 rounded-md text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
+      autocomplete="off"
+    />
+  </div>
+
   {
     status === 200 ? (
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    {data.map((item: any) => (
-      <CardEntrepreneur items={item}/>
-    ))}
-  </div>
+      <div
+        id="entrepreneurGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
+        {data.map((item: any) => (
+          <CardEntrepreneur items={item} />
+        ))}
+      </div>
     ) : (
-      <p class="text-red-300 my-10">No se pudo cargar la información de los emprendimientos.</p>
+      <p class="text-red-300 my-10">
+        No se pudo cargar la información de los emprendimientos.
+      </p>
     )
   }
-  <!-- <button class="shadow-lg cursor-pointer bg-purple-700 text-white py-2 px-4 rounded mt-10 mb-6 hover:bg-purple-600 transition duration-300">
-    Ver más
-  </button> -->
 </div>
+
+<script>
+  function filterEntrepreneurs() {
+    const input = document.getElementById("searchInput");
+    const filter = (input as HTMLInputElement)?.value.toLowerCase() ?? "";
+    const cards = document.querySelectorAll("#entrepreneurGrid [data-name]");
+
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const name = card.getAttribute("data-name");
+      const matches = name?.includes(filter);
+      (card as HTMLElement).style.display = matches ? "block" : "none";
+      if (matches) visibleCount++;
+    });
+
+    // Mensaje si no hay resultados
+    const noResults = document.getElementById("noResultsMessage");
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("searchInput");
+    input?.addEventListener("input", filterEntrepreneurs);
+    filterEntrepreneurs(); // Ejecuta inicialmente
+  });
+</script>

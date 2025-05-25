@@ -5,6 +5,7 @@ import Modal from "../Modal.astro";
 
 <div
   class="card relative rounded-2xl bg-white flex flex-col hover:scale-105 group ease-in transition duration-300"
+   data-name={items.business_name.toLowerCase()}
 >
   <div
     class="overflow-hidden rounded-t-2xl flex justify-center items-center relative"
@@ -20,7 +21,7 @@ import Modal from "../Modal.astro";
     </div>
 
     <button
-      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.logo_path}", "${items.entrepreneur}", "${items.email}" , "${items.phone}", ${items.entrepreneur_id})`}
+      onclick={`openModal("${items.business_name}", "${items.description}", "${items.logo_path}", "${items.user_name}", "${items.email}" , "${items.phone}", ${items.entrepreneur_id})`}
       class="cursor-pointer absolute bg-white text-purple-900 rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
     >
       Ver detalles
@@ -29,9 +30,9 @@ import Modal from "../Modal.astro";
   <div class="px-4 py-3">
     <h3 class="text-xs text-gray-500">{items.categories}</h3>
     <p class="text-gray-700 text-base font-bold">{items.business_name}</p>
-    <p class="text-gray-500 text-sm mb-4">{items.entrepreneur}</p>
+    <p class="text-gray-500 text-sm mb-4">{items.user_name}</p>
     <a
-      onclick={`openModal("${items.business_name}", "${items.description}", "${items.categories}", "${items.logo_path}", "${items.entrepreneur}", "${items.email}" , "${items.phone}", ${items.entrepreneur_id})`}
+      onclick={`openModal("${items.business_name}", "${items.description}", "${items.logo_path}", "${items.user_name}", "${items.email}" , "${items.phone}", ${items.entrepreneur_id})`}
       class="cursor-pointer text-sm flex items-center justify-center text-center bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition duration-300 w-32"
       >Conoce más!</a
     >

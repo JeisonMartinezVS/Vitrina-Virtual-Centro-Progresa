@@ -25,34 +25,13 @@
           id="modalImage"
           class="rounded-lg w-full h-auto object-cover col-span-2 mb-4"
         />
-        <div class="flex flex-row gap-3">
-          <img
-            src="images/PruebaImagen.png"
-            alt=""
-            class="cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16"
-          />
-          <img
-            src="images/PruebaImagen.png"
-            alt=""
-            class="cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16"
-          />
-          <img
-            src="images/PruebaImagen.png"
-            alt=""
-            class="cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16"
-          />
-          <img
-            src="images/PruebaImagen.png"
-            alt=""
-            class="cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16"
-          />
-        </div>
+        <div id="modalProductImages" class="flex flex-row gap-3"></div>
       </div>
       <div class="w-full">
-        <div class="flex items-center mb-2">
+        <!-- <div class="flex items-center mb-2">
           <i class="fa-solid fa-tag text-black mr-2"></i>
           <h3 class="text-xs text-gray-500" id="modalCategory"></h3>
-        </div>
+        </div> -->
         <h2 class="text-2xl font-bold mb-4 text-black modal-title"></h2>
         <div class="flex items-center mb-2">
           <i class="fa-solid fa-user text-black mr-2"></i>
@@ -93,9 +72,9 @@
           </div>
         </div>
         <a
-        id="modalWpp"
-        target="_blank"
-        rel="noopener"
+          id="modalWpp"
+          target="_blank"
+          rel="noopener"
           class="bg-green-400 py-3 px-16 w-full cursor-pointer text-white rounded-lg"
           ><i class="fa-brands fa-whatsapp pr-2"></i>Contacta Conmigo</a
         >
@@ -108,12 +87,10 @@
   async function openModal(
     title,
     description,
-    categories,
     logo_path,
-    entrepreneur,
+    user_name,
     email,
-    phone,
-    entrepreneur_id
+    phone
   ) {
     const modalTitles = document.querySelectorAll(".modal-title");
     modalTitles.forEach((element) => {
@@ -121,38 +98,43 @@
     });
     document.getElementById("modalDescription").textContent = description;
     document.getElementById("modalImage").src = logo_path;
-    document.getElementById("modalCategory").textContent = categories;
-    document.getElementById("modalEntrepreneur").textContent = entrepreneur;
+    document.getElementById("modalEntrepreneur").textContent = user_name;
     document.getElementById("modalEmail").textContent = email;
     document.getElementById("modalPhone").textContent = phone;
 
-    const wppBtn = document.getElementById('modalWpp')
-    if(wppBtn){
-        wppBtn.href = `https://wa.me/${phone}`
+    const wppBtn = document.getElementById("modalWpp");
+    if (wppBtn) {
+      wppBtn.href = `https://wa.me/${phone}`;
     }
 
     try {
-    // Api desarrollo
-    // const usersRes = await fetch("/api/users-manager/entrepreneurs/");
+      // Api desarrollo
+      //   const usersRes = await fetch("/api/users-manager/entrepreneurs/");
 
-    // Api Produccion
-    const usersRes = await fetch("https://virtualcase-backend.onrender.com/users-manager/entrepreneurs/");
+      // Api Produccion
+      const usersRes = await fetch(
+        "https://virtualcase-backend.onrender.com/users-manager/entrepreneurs/"
+      );
 
-    const allEntrepreneurs = await usersRes.json();
+      const allEntrepreneurs = await usersRes.json();
 
-    const match = allEntrepreneurs.find((e) => e.business_name === title);
-    if (!match) {
-      console.warn("Emprendedor no encontrado");
-      return;
-    }
+      const match = allEntrepreneurs.find((e) => e.business_name === title);
+      if (!match) {
+        console.warn("Emprendedor no encontrado");
+        return;
+      }
 
-    const entrepreneurId = match.id;
+      const entrepreneurId = match.id;
 
-    // Api Desarrollo
-    // const res = await fetch(`/api/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`);
+      // Api Desarrollo
+      //   const res = await fetch(
+      //     `/api/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`
+      //   );
 
-    // Api Produccion
-    const res = await fetch(`https://virtualcase-backend.onrender.com/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`);
+      // Api Produccion
+      const res = await fetch(
+        `https://virtualcase-backend.onrender.com/items-manager/social_links/?entrepreneur_id=${entrepreneurId}`
+      );
 
       const links = await res.json();
 
@@ -166,7 +148,7 @@
         youtube: "fa-youtube",
         linkedin: "fa-linkedin-in",
         tiktok: "fa-tiktok",
-        whatsapp: "fa-whatsapp"
+        whatsapp: "fa-whatsapp",
       };
 
       links.forEach((link) => {
@@ -180,7 +162,49 @@
         a.innerHTML = `<i class="fa-brands ${icon}"></i>`;
         container.appendChild(a);
       });
-    } catch(e) {
+
+      const productsRes = await fetch(
+        "https://virtualcase-backend.onrender.com/items-manager/products/"
+      );
+      //   const productsRes = await fetch("/api/items-manager/products/");
+      const products = await productsRes.json();
+
+      console.log("Todos los productos:", products);
+      console.log("ID del emprendedor:", entrepreneurId);
+
+      const filteredProducts = products.filter(
+        (p) => p.entrepreneur_id === Number(entrepreneurId)
+      );
+
+      console.log("Productos filtrados:", filteredProducts);
+
+      const imagesContainer = document.getElementById("modalProductImages");
+      imagesContainer.innerHTML = "";
+
+      filteredProducts.forEach((product) => {
+        const img = document.createElement("img");
+        img.src = product.image_path;
+        img.alt = product.name;
+        img.className =
+          "cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16";
+
+        // Hacer clic en miniatura la convierte en la imagen principal
+        img.addEventListener("click", () => {
+          document.getElementById("modalImage").src = product.image_path;
+
+          // Quitar clase activa de otras
+          const allThumbnails = imagesContainer.querySelectorAll("img");
+          allThumbnails.forEach((i) =>
+            i.classList.remove("ring-2", "ring-purple-700")
+          );
+
+          // Añadir clase activa a la imagen actual
+          img.classList.add("ring-2", "ring-purple-700");
+        });
+
+        imagesContainer.appendChild(img);
+      });
+    } catch (e) {
       console.error("Error", e);
     }
 
@@ -210,4 +234,3 @@
     });
   });
 </script>
-
