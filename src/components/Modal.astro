@@ -32,12 +32,24 @@
           <i class="fa-solid fa-tag text-black mr-2"></i>
           <h3 class="text-xs text-gray-500" id="modalCategory"></h3>
         </div> -->
-        <h2 class="text-2xl font-bold mb-4 text-black modal-title"></h2>
+        <h2
+          id="modalTitle"
+          class="text-2xl font-bold mb-4 text-black modal-title"
+        >
+        </h2>
         <div class="flex items-center mb-2">
           <i class="fa-solid fa-user text-black mr-2"></i>
           <h3 class="text-xs text-gray-500" id="modalEntrepreneur"></h3>
         </div>
         <p id="modalDescription" class="text-black my-4"></p>
+        <div id="modalPriceWrapper" class="flex items-center mb-4 hidden">
+          <i class="fa-solid fa-dollar-sign text-black mr-2"></i>
+          <h3 class="text-md text-black font-bold" id="modalPrice"></h3>
+        </div>
+        <div id="modalStatusWrapper" class="flex items-center mb-4 hidden">
+          <i class="fa-solid fa-check-circle text-black mr-2"></i>
+          <h3 class="text-md font-bold" id="modalStatus"></h3>
+        </div>
         <!-- <div class="flex items-center mb-4">
           <i class="fa-solid fa-location-dot text-black mr-2"></i>
           <h3 class="text-xs text-gray-500" id="modalEntrepreneur"></h3>
@@ -101,6 +113,10 @@
     document.getElementById("modalEntrepreneur").textContent = user_name;
     document.getElementById("modalEmail").textContent = email;
     document.getElementById("modalPhone").textContent = phone;
+
+    let originalImage = logo_path;
+    let originalTitle = title;
+    let originalDescription = description;
 
     const wppBtn = document.getElementById("modalWpp");
     if (wppBtn) {
@@ -169,17 +185,36 @@
       //   const productsRes = await fetch("/api/items-manager/products/");
       const products = await productsRes.json();
 
-      console.log("Todos los productos:", products);
-      console.log("ID del emprendedor:", entrepreneurId);
-
       const filteredProducts = products.filter(
         (p) => p.entrepreneur_id === Number(entrepreneurId)
       );
 
-      console.log("Productos filtrados:", filteredProducts);
-
       const imagesContainer = document.getElementById("modalProductImages");
       imagesContainer.innerHTML = "";
+
+      const originalThumbnail = document.createElement("img");
+      originalThumbnail.src = originalImage;
+      originalThumbnail.alt = "Imagen principal";
+      originalThumbnail.className =
+        "cursor-pointer object-cover border-2 border-purple-900 rounded-lg w-16 h-16 ring-2 ring-purple-700"; // activa por defecto
+
+      originalThumbnail.addEventListener("click", () => {
+        document.getElementById("modalImage").src = originalImage;
+        document.getElementById("modalTitle").textContent = originalTitle;
+        document.getElementById("modalDescription").textContent =
+          originalDescription;
+
+        document.getElementById("modalPriceWrapper").classList.add("hidden");
+        document.getElementById("modalStatusWrapper").classList.add("hidden");
+
+        const allThumbnails = imagesContainer.querySelectorAll("img");
+        allThumbnails.forEach((i) =>
+          i.classList.remove("ring-2", "ring-purple-700")
+        );
+        originalThumbnail.classList.add("ring-2", "ring-purple-700");
+      });
+
+      imagesContainer.appendChild(originalThumbnail);
 
       filteredProducts.forEach((product) => {
         const img = document.createElement("img");
@@ -191,6 +226,30 @@
         // Hacer clic en miniatura la convierte en la imagen principal
         img.addEventListener("click", () => {
           document.getElementById("modalImage").src = product.image_path;
+          document.getElementById("modalDescription").textContent =
+            product.description;
+          document.getElementById("modalTitle").textContent = product.name;
+          // Mostrar precio
+          const priceWrapper = document.getElementById("modalPriceWrapper");
+          const priceEl = document.getElementById("modalPrice");
+          priceEl.textContent = `$${Number(product.price).toFixed(2)}`;
+          priceWrapper.classList.remove("hidden");
+
+          // Mostrar estado
+          const statusWrapper = document.getElementById("modalStatusWrapper");
+          const statusEl = document.getElementById("modalStatus");
+          statusEl.textContent = product.status;
+          statusEl.className = "text-xs font-semibold";
+          statusEl.classList.remove("text-green-600", "text-red-600");
+
+          if (product.status.toLowerCase() === "available") {
+            statusEl.textContent = "Producto disponible";
+            statusEl.classList.add("text-green-600");
+          } else {
+            statusEl.textContent = "Producto no disponible";
+            statusEl.classList.add("text-red-600");
+          }
+          statusWrapper.classList.remove("hidden");
 
           // Quitar clase activa de otras
           const allThumbnails = imagesContainer.querySelectorAll("img");
